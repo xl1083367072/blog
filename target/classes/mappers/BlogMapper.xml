@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.mapper.BlogMapper">
+  <resultMap id="BaseResultMap" type="com.xl.pojo.Blog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="release_date" jdbcType="TIMESTAMP" property="release_date" />
+    <result column="click_hit" jdbcType="INTEGER" property="click_hit" />
+    <result column="reply_hit" jdbcType="INTEGER" property="reply_hit" />
+    <result column="type_id" jdbcType="INTEGER" property="type_id" />
+    <result column="key_word" jdbcType="VARCHAR" property="key_word" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xl.pojo.Blog">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, summary, release_date, click_hit, reply_hit, type_id, key_word, create_time, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.xl.pojo.BlogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.xl.pojo.BlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xl.pojo.Blog" useGeneratedKeys="true">
+    insert into blog (title, summary, release_date, 
+      click_hit, reply_hit, type_id, 
+      key_word, create_time, update_time, 
+      content)
+    values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{release_date,jdbcType=TIMESTAMP}, 
+      #{click_hit,jdbcType=INTEGER}, #{reply_hit,jdbcType=INTEGER}, #{type_id,jdbcType=INTEGER}, 
+      #{key_word,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xl.pojo.Blog" useGeneratedKeys="true">
+    <!--<selectKey keyProperty="id" order="AFTER" resultType="int">-->
+        <!--SELECT LAST_INSERT_ID()-->
+    <!--</selectKey>-->
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="release_date != null">
+        release_date,
+      </if>
+      <if test="click_hit != null">
+        click_hit,
+      </if>
+      <if test="reply_hit != null">
+        reply_hit,
+      </if>
+      <if test="type_id != null">
+        type_id,
+      </if>
+      <if test="key_word != null">
+        key_word,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="release_date != null">
+        #{release_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="click_hit != null">
+        #{click_hit,jdbcType=INTEGER},
+      </if>
+      <if test="reply_hit != null">
+        #{reply_hit,jdbcType=INTEGER},
+      </if>
+      <if test="type_id != null">
+        #{type_id,jdbcType=INTEGER},
+      </if>
+      <if test="key_word != null">
+        #{key_word,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.pojo.Blog">
+    update blog
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="release_date != null">
+        release_date = #{release_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="click_hit != null">
+        click_hit = #{click_hit,jdbcType=INTEGER},
+      </if>
+      <if test="reply_hit != null">
+        reply_hit = #{reply_hit,jdbcType=INTEGER},
+      </if>
+      <if test="type_id != null">
+        type_id = #{type_id,jdbcType=INTEGER},
+      </if>
+      <if test="key_word != null">
+        key_word = #{key_word,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xl.pojo.Blog">
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      release_date = #{release_date,jdbcType=TIMESTAMP},
+      click_hit = #{click_hit,jdbcType=INTEGER},
+      reply_hit = #{reply_hit,jdbcType=INTEGER},
+      type_id = #{type_id,jdbcType=INTEGER},
+      key_word = #{key_word,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.pojo.Blog">
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      release_date = #{release_date,jdbcType=TIMESTAMP},
+      click_hit = #{click_hit,jdbcType=INTEGER},
+      reply_hit = #{reply_hit,jdbcType=INTEGER},
+      type_id = #{type_id,jdbcType=INTEGER},
+      key_word = #{key_word,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!-- 分页查询博客 -->
+    <select id="list" parameterType="Map" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from blog
+        <where>
+            <if test="title!=null and title!='' ">
+                and title like #{title}
+            </if>
+            <if test="typeId!=null and typeId!='' ">
+                and type_id = #{typeId}
+            </if>
+            <if test="releaseDateStr!=null and releaseDateStr!='' ">
+                and DATE_FORMAT(release_date,'%Y年%m月') = #{releaseDateStr}
+            </if>
+        </where>
+        order by release_date desc
+
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <!-- 获取总记录数 -->
+    <select id="getTotal" parameterType="Map" resultType="Long">
+        select count(id) from blog
+        <where>
+            <if test="title!=null and title!='' ">
+                and title like #{title}
+            </if>
+            <if test="typeId!=null and typeId!='' ">
+                and type_id = #{typeId}
+            </if>
+            <if test="releaseDateStr!=null and releaseDateStr!='' ">
+                and DATE_FORMAT(release_date,'%Y年%m月') = #{releaseDateStr}
+            </if>
+        </where>
+    </select>
+
+    <!--查询不同日期的博客数量-->
+    <select id="countList" resultMap="BaseResultMap">
+        select
+        DATE_FORMAT(release_date,"%Y年%m月") as releaseDateStr,
+        count(id) as blogCount
+        from blog
+        group by DATE_FORMAT(release_date,"%Y年%m月")
+        order  by DATE_FORMAT(release_date,"%Y年%m月") desc
+    </select>
+
+    <!--查询上一篇博客-->
+    <select id="lastBlog" parameterType="int" resultType="blog">
+        select id,title from blog
+        where id &lt;#{id}
+        order by id desc
+        limit 1
+    </select>
+
+    <!--查询下一篇博客-->
+    <select id="nextBlog" parameterType="int" resultType="blog">
+        select id,title from blog
+        where id &gt;#{id}
+        order by id asc
+        limit 1
+    </select>
+
+</mapper>
