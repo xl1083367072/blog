@@ -30,9 +30,9 @@ public class BlogAdminController {
     public String save(Blog blog){
         blog.setRelease_date(new Date());
 //        返回添加的博客的id
-        int id = blogService.save(blog);
+        int count = blogService.save(blog);
         SolrInputDocument doc = new SolrInputDocument();
-        doc.addField("id",id);
+        doc.addField("id",blog.getId());
         doc.addField("blog_title",blog.getTitle());
         doc.addField("blog_content",blog.getContent());
         doc.addField("blog_summary",blog.getSummary());
@@ -41,9 +41,11 @@ public class BlogAdminController {
         try {
             solrServer.add(doc);
             solrServer.commit();
-            jsonObject.put("success",true);
+            if(count>0)
+                jsonObject.put("success", true);
+            else
+                jsonObject.put("success", false);
         }catch (Exception e){
-            jsonObject.put("success",false);
             e.printStackTrace();
         }
         return jsonObject.toJSONString();

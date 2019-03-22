@@ -103,7 +103,6 @@
     //实例化编辑器
     var ue = UE.getEditor('editor');
 
-
 </script>
 </body>
 </html>

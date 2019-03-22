@@ -106,10 +106,10 @@
       #{key_word,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xl.pojo.Blog" useGeneratedKeys="true">
-    <!--<selectKey keyProperty="id" order="AFTER" resultType="int">-->
-        <!--SELECT LAST_INSERT_ID()-->
-    <!--</selectKey>-->
+  <insert id="insertSelective"  parameterType="com.xl.pojo.Blog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+  </selectKey>
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="title != null">
