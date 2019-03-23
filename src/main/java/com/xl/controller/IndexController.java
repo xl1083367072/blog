@@ -4,6 +4,7 @@ import com.xl.pojo.Blog;
 import com.xl.service.BlogService;
 import com.xl.utils.PageBean;
 import com.xl.utils.PageUtil;
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +15,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +43,14 @@ public class IndexController {
      */
     @RequestMapping("/index")
     public String index(@RequestParam(value="page",required=false)String page, @RequestParam(value="typeId",required=false)String typeId,
-                        @RequestParam(value="releaseDate",required=false)String releaseDate, HttpServletRequest request, ModelMap modelMap){
-
+                        @RequestParam(value="releaseDate",required=false)String releaseDate, HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception{
+        if(session.isNew()){
+            ServletContext servletContext = request.getServletContext();
+            Integer count = (Integer) servletContext.getAttribute("count");
+            count++;
+            servletContext.setAttribute("count",count);
+            FileUtils.writeStringToFile(new File(servletContext.getRealPath("/")+"count.txt"),String.valueOf(count));
+        }
         if(page==null||page.equals("")){
             page="1";
         }

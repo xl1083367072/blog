@@ -8,6 +8,7 @@ import com.xl.service.BlogService;
 import com.xl.service.BlogTypeService;
 import com.xl.service.BloggerService;
 import com.xl.service.LinkService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,6 +18,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ import java.util.List;
 public class MyListener implements ServletContextListener, ApplicationContextAware {
 
     @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
+    public void contextInitialized(ServletContextEvent servletContextEvent){
 
         System.out.println("=============================================");
 
@@ -53,8 +55,15 @@ public class MyListener implements ServletContextListener, ApplicationContextAwa
         //        按日期分类
         List<Blog> blogs = blogService.countList();
         servletContext.setAttribute("blogCountList",blogs);
-
-
+        File file = new File(servletContext.getRealPath("/")+"count.txt");
+        try {
+            List<String> list = FileUtils.readLines(file, "utf-8");
+            Integer count = Integer.parseInt(list.get(0));
+            System.out.println("============================="+count);
+            servletContext.setAttribute("count",count);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

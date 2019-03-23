@@ -22,6 +22,16 @@ public class Comment {
 //    查询评论时一并返回此评论的博客
     private Blog blog;
 
+    private String commentDateStr;
+
+    public String getCommentDateStr() {
+        return commentDateStr;
+    }
+
+    public void setCommentDateStr(String commentDateStr) {
+        this.commentDateStr = commentDateStr;
+    }
+
     public Blog getBlog() {
         return blog;
     }

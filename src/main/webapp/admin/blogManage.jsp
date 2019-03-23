@@ -42,7 +42,7 @@
 		 var ids=strIds.join(",");
 		 $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 				if(r){
-					$.post("${ctx}/admin/blog/delete.do",{ids:ids},function(result){
+					$.post("${ctx}/admin/removeBlog.action",{ids:ids},function(result){
 						if(result.success){
 							 $.messager.alert("系统提示","数据已成功删除！");
 							 $("#dg").datagrid("reload");
@@ -75,7 +75,7 @@
    		<th field="cb" checkbox="true" align="center"></th>
    		<th field="id" width="20" align="center">编号</th>
    		<th field="title" width="200" align="center" formatter="formatTitle">标题</th>
-   		<th field="release_date" width="50" align="center">发布日期</th>
+   		<th field="releaseDateStr" width="50" align="center">发布日期</th>
    		<th field="blogType" width="50" align="center" formatter="formatBlogType">博客类别</th>
    	</tr>
    </thead>

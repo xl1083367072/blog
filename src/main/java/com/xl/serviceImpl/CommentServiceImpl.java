@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@Transactional
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
@@ -49,4 +49,11 @@ public class CommentServiceImpl implements CommentService {
     public void removeCommentById(Integer id) {
         commentMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<Comment> commentList() {
+        return commentMapper.selectByExample(null);
+    }
 }
+
+

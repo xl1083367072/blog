@@ -30,7 +30,7 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
-                /index=anon
+                /login.action=anon
                 /admin/**=authc
                 /logout=logout
             </value>

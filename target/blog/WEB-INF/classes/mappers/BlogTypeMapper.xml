@@ -131,7 +131,7 @@
 
     <!--查找博客类别以及数量-->
     <select id="countList" resultMap="BaseResultMap">
-        select bt.id,bt.type_name,count(b.id) as blogCount
+        select bt.id,bt.type_name,order_no,count(b.id) as blogCount
         from blog_type bt
         left join blog b on bt.id = b.id
         group by bt.id

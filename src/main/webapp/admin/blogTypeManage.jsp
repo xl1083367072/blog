@@ -30,7 +30,7 @@
 		 var ids=strIds.join(",");
 		 $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 				if(r){
-					$.post("${ctx}/admin/blogType/delete.do",{ids:ids},function(result){
+					$.post("${ctx}/admin/removeBlogType.action",{ids:ids},function(result){
 						if(result.success){
 							if(result.exist){
 								 $.messager.alert("系统提示",result.exist);
@@ -48,7 +48,7 @@
 	
 	function openBlogTypeAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","添加博客类别信息");
-		url="${ctx}/admin/blogType/save.do";
+		url="${ctx}/admin/addBlogType.action";
 	}
 	
 	function openBlogTypeModifyDialog(){
@@ -60,7 +60,7 @@
 		 var row=selectedRows[0];
 		 $("#dlg").dialog("open").dialog("setTitle","编辑博客类别信息");
 		 $("#fm").form("load",row);
-		 url="${ctx}/admin/blogType/save.do?id="+row.id;
+		 url="${ctx}/admin/modifyBlogType.action?id="+row.id;
 	 }
 	
 	function saveBlogType(){
@@ -97,13 +97,13 @@
 </head>
 <body style="margin: 1px">
 <table id="dg" title="博客类别管理" class="easyui-datagrid" fitColumns="true" pagination="true" rownumbers="true" 
-	   url="${ctx}/admin/blogType/list.do" fit="true" toolbar="#tb">
+	   url="${ctx}/admin/blogTypeList.action" fit="true" toolbar="#tb">
    <thead>
    	<tr>
    		<th field="cb" checkbox="true" align="center"></th>
    		<th field="id" width="20" align="center">编号</th>
-   		<th field="typeName" width="150" align="center">博客类型名称</th>
-   		<th field="orderNo" width="50" align="center">排序序号</th>
+   		<th field="type_name" width="150" align="center">博客类型名称</th>
+   		<th field="order_no" width="50" align="center">排序序号</th>
    		<th field="blogCount" width="80" align="center">博客数量</th>
    	</tr>
    </thead>
@@ -123,11 +123,11 @@
    	<table cellspacing="8px">
    		<tr>
    			<td>博客类别名称：</td>
-   			<td><input type="text" id="typeName" name="typeName" class="easyui-validatebox" required="true"/></td>
+   			<td><input type="text" id="typeName" name="type_name" class="easyui-validatebox" required="true"/></td>
    		</tr>
    		<tr>
    			<td>博客类别排序：</td>
-   			<td><input type="text" id="orderNo" name="orderNo" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(类别根据排序序号从小到大排序)</td>
+   			<td><input type="text" id="orderNo" name="order_no" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(类别根据排序序号从小到大排序)</td>
    		</tr>
    	</table>
    </form>

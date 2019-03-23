@@ -5,13 +5,19 @@ import com.xl.pojo.Blog;
 import com.xl.pojo.BlogType;
 import com.xl.service.BlogService;
 import com.xl.service.BlogTypeService;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +36,9 @@ public class BlogAdminController {
 
     @Autowired
     private BlogTypeService blogTypeService;
+
+    @Autowired
+    private SimpleDateFormat dateFormat;
 
     @ResponseBody
     @RequestMapping("/saveBlog")
@@ -59,11 +68,43 @@ public class BlogAdminController {
 
     @ResponseBody
     @RequestMapping("/blogList")
-    public List<Blog> blogList(){
-        List<Blog> blogs = blogService.findAll();
-        for (Blog blog : blogs){
-            BlogType blogType = blogTypeService.findById(blog.getType_id());
-            blog.setBlogType(blogType);
+    public List<Blog> blogList(String title) throws Exception{
+        List<Blog> blogs = null;
+        if(title!=null&&!title.equals("")){
+            blogs = new ArrayList<>();
+//            solrj关键字搜索
+            SolrQuery query = new SolrQuery();
+//            设置搜索关键字
+            query.setQuery(title);
+//            设置查找域
+            query.set("df","blog_title");
+//            设置分页
+            query.setStart(0);
+            query.setRows(10);
+//            获得查询结果集
+            QueryResponse queryResponse = solrServer.query(query);
+            SolrDocumentList solrDocuments = queryResponse.getResults();
+//            遍历结果集
+            for (SolrDocument doc:solrDocuments) {
+                Blog blog = new Blog();
+//                设置属性
+                blog.setId(Integer.parseInt((String)(doc.get("id"))));
+                blog.setTitle((String) doc.get("blog_title"));
+                String releaseDateStr = dateFormat.format(doc.get("release_date"));
+                blog.setReleaseDateStr(releaseDateStr);
+                BlogType blogType = blogTypeService.findById((Integer) doc.get("blogType"));
+                blog.setBlogType(blogType);
+                blogs.add(blog);
+            }
+
+        }else {
+            blogs = blogService.findAll();
+            for (Blog blog : blogs){
+                BlogType blogType = blogTypeService.findById(blog.getType_id());
+                blog.setBlogType(blogType);
+                String releaseDateStr = dateFormat.format(blog.getRelease_date());
+                blog.setReleaseDateStr(releaseDateStr);
+            }
         }
         return blogs;
     }
@@ -79,5 +120,21 @@ public class BlogAdminController {
         return  blog;
     }
 
+    @ResponseBody
+    @RequestMapping("/removeBlog")
+    public String removeBlog(String ids) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        if(ids!=null&&ids.length()>0){
+            String[] split = ids.split(",");
+            for (String id:split) {
+//                删除索引和数据库中的数据
+                solrServer.deleteById(id);
+                blogService.removeBlogById(Integer.parseInt(id));
+            }
+            solrServer.commit();
+            jsonObject.put("success",true);
+        }
+        return jsonObject.toJSONString();
+    }
 
 }

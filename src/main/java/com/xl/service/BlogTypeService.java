@@ -12,4 +12,9 @@ public interface BlogTypeService {
 
     BlogType findById(Integer id);
 
+    void add(BlogType blogType);
+
+    void modify(BlogType blogType);
+
+    void  remove(Integer id);
 }

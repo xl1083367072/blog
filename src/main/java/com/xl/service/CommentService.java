@@ -19,4 +19,7 @@ public interface CommentService {
 //    根据id删除评论
     void removeCommentById(Integer id);
 
+//    查询所有评论
+    List<Comment> commentList();
+
 }

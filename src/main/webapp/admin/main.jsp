@@ -33,7 +33,7 @@
 	
 	function openPasswordModifyDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","修改密码");
-		url="${ctx}/admin/blogger/modifyPassword.action?id=${blogger.id}";
+		url="${ctx}/admin/modifyPassword.action?id=1";
 	}
 	
 	function modifyPassword(){
@@ -79,21 +79,11 @@
 	function logout(){
 		$.messager.confirm("系统提示","您确定要退出系统吗？",function(r){
 			if(r){
-				window.location.href='${ctx}/admin/blogger/logout.action';
+				window.location.href='${ctx}/logout';
 			} 
 		 });
 	}
 	
-	function refreshSystem(){
-		$.post("${ctx}/admin/system/refreshSystem.do",{},function(result){
-			if(result.success){
-				$.messager.alert("系统提示","已成功刷新系统缓存并成功清除临时数据！");
-			}else{
-				$.messager.alert("系统提示","刷新系统缓存与清除临时数据失败！");
-			}
-		},"json");
-	}
-
 </script>
 </head>
 <body class="easyui-layout">
@@ -139,7 +129,7 @@
 		<div title="系统管理"  data-options="iconCls:'icon-system'" style="padding:10px">
 		    <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
 			<a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
-			<a href="javascript:refreshSystem()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 170px;" title="刷新系统缓存+清除临时数据">刷新缓存+清除临时数据</a>
+			<a href="javascript:openTab('查看网站访问人数','count.jsp','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 170px;" title="查看网站访问人数">查看网站访问人数</a>
 			<a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'" style="width: 150px;">安全退出</a>
 		</div>
 	</div>
@@ -155,7 +145,7 @@
    	<table cellspacing="8px">
    		<tr>
    			<td>用户名：</td>
-   			<td><input type="text" id="user_name" name="user_name" readonly="readonly" value="${blogger.user_name }" style="width: 200px"/></td>
+   			<td><input type="text" id="user_name" name="userName" readonly="readonly" value="${blogger.user_name }" style="width: 200px"/></td>
    		</tr>
    		<tr>
    			<td>新密码：</td>

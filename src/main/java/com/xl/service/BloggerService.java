@@ -7,4 +7,8 @@ public interface BloggerService {
 
     Blogger findByUserName(@Param("username") String username);
 
+    Blogger findById(Integer id);
+
+    void modify(Blogger blogger);
+
 }

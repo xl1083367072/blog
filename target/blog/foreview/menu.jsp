@@ -34,7 +34,7 @@
 		        <!-- <li><a href="#"><font color="black"><strong>CSDN博客</strong></font color="black"></a></li>-->
 		        <li><a href="${ctx}/login.jsp" target="_blank"><font color="red"><strong>后台登录</strong></font></a></li>
 		        <li><a href="${ctx}/blogger/aboutMe.action" target="_blank"><font color="black"><strong>关于博主</strong></font></a></li>
-		        <li><a href="${ctx}/blogger/aboutMe.action" target="_blank"><font color="black"><strong>后续功能</strong></font></a></li>
+		        <li><a href="${ctx}/globe-layers.html" target="_blank"><font color="black"><strong>查看3D地球</strong></font></a></li>
 		        <li><a href="${ctx}/download.action" target="_blank"><font color="black"><strong>资源下载</strong></font></a></li>
 		      </ul>
 		      <form action="${ctx}/blog/query.action" class="navbar-form navbar-right" role="search" method="post" onsubmit="return checkData()">

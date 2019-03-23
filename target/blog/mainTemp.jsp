@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
-<%@page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,7 +15,7 @@
 <link rel="stylesheet" href="${ctx}/static/bootstrap3/css/bootstrap.min.css">
 <link rel="stylesheet" href="${ctx}/static/bootstrap3/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${ctx}/static/css/blog.css">
-<link href="http://blog.java1234.com/favicon.ico" rel="SHORTCUT ICON">
+<link href="${ctx}/favicon.ico" rel="SHORTCUT ICON">
 <script src="${ctx}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
 <script src="${ctx}/static/bootstrap3/js/bootstrap.min.js"></script>
 

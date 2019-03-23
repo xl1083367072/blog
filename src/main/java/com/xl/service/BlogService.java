@@ -24,4 +24,8 @@ public interface BlogService {
     int save(Blog blog);
 
     List<Blog> findAll();
+
+    void removeBlogById(Integer id);
+
+    void removeByTypeId(Integer typeId);
 }

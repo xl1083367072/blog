@@ -9,4 +9,10 @@ public interface LinkService {
 
     List<Link> list(Map<String,Object> map);
 
+    void addLink(Link link);
+
+    void modifyLink(Link link);
+
+    void removeLink(Integer id);
+
 }

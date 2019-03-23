@@ -84,7 +84,7 @@ public class BlogController {
         return  "mainTemp";
     }
 
-//    lucence查询
+//    lucene查询
     @RequestMapping("/query")
     public String query(String queryKey,Model model,HttpServletRequest request){
         SolrQuery query = new SolrQuery();

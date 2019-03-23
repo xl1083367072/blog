@@ -38,7 +38,6 @@ public class BloggerController {
         }catch (AuthenticationException e){
 //            抛出异常，证明验证失败，返回错误信息
             model.addAttribute("errorInfo","用户名或密码错误");
-//            将用户名密码回显，返回登录页面
             return "login";
         }
     }
