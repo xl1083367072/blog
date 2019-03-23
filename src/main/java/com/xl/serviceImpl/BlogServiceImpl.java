@@ -54,4 +54,9 @@ public class BlogServiceImpl implements BlogService {
     public int save(Blog blog) {
         return blogMapper.insertSelective(blog);
     }
+
+    @Override
+    public List<Blog> findAll() {
+        return blogMapper.selectByExample(null);
+    }
 }

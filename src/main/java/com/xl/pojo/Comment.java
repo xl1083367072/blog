@@ -19,6 +19,17 @@ public class Comment {
 
     private Date update_time;
 
+//    查询评论时一并返回此评论的博客
+    private Blog blog;
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
+
     public Integer getId() {
         return id;
     }

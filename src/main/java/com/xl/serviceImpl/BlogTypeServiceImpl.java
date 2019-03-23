@@ -35,4 +35,11 @@ public class BlogTypeServiceImpl implements BlogTypeService {
         Blog blog = blogService.findById(id);
         return blogTypeMapper.selectByPrimaryKey(blog.getType_id());
     }
+
+//    根据id查询博客类型
+
+    @Override
+    public BlogType findById(Integer id) {
+        return blogTypeMapper.selectByPrimaryKey(id);
+    }
 }

@@ -12,11 +12,11 @@
 <script type="text/javascript" src="${ctx}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 
-<script type="text/javascript" charset="gbk" src="${ctx}/static/newUeditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="gbk" src="${ctx}/static/newUeditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk" src="${ctx}/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="${ctx}/static/ueditor/ueditor.all.js"> </script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="utf-8" src="${ctx}/static/newUeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 	
 	
@@ -72,7 +72,7 @@
    				<select class="easyui-combobox" style="width: 154px" id="blogTypeId" name="blogType.id" editable="false" panelHeight="auto" >
 					<option value="">请选择博客类别...</option>	
 				    <c:forEach var="blogType" items="${blogTypeCountList }">
-				    	<option value="${blogType.id }">${blogType.typeName }</option>
+				    	<option value="${blogType.id }">${blogType.type_name }</option>
 				    </c:forEach>			
                 </select>
    			</td>
@@ -104,7 +104,7 @@
 
     ue.addListener("ready",function(){
         //通过ajax请求数据
-        UE.ajax.request("${ctx}/admin/blog/findById.do",
+        UE.ajax.request("${ctx}/admin/findById.action",
             {
                 method:"post",
                 async : false,  
@@ -112,7 +112,7 @@
                 onsuccess:function(result){
                 	result = eval("(" + result.responseText + ")");  
                 	$("#title").val(result.title);
-                	$("#keyWord").val(result.keyWord);
+                	$("#keyWord").val(result.key_word);
        				$("#blogTypeId").combobox("setValue",result.blogType.id);
        				UE.getEditor('editor').setContent(result.content);
                 }

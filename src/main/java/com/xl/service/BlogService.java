@@ -22,4 +22,6 @@ public interface BlogService {
     void update(Blog blog);
 
     int save(Blog blog);
+
+    List<Blog> findAll();
 }

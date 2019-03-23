@@ -16,11 +16,11 @@
 <script type="text/javascript">
 
 	function formatBlogType(val,row){
-		return val.typeName;
+		return val.type_name;
 	}
 	
 	function formatTitle(val,row){
-		return "<a target='_blank' href='${ctx}/blog/articles/"+row.id+".html'>"+val+"</a>"
+		return "<a target='_blank' href='${ctx}/blog/articles/"+row.id+".action'>"+val+"</a>"
 	}
 	
 	function searchBlog(){
@@ -61,6 +61,7 @@
 			 $.messager.alert("系统提示","请选择一个要修改的博客！");
 			 return;
 		 }
+		 //如果选择多个，修改默认第一个
 		 var row=selectedRows[0];
 		 window.parent.openTab('修改博客','modifyBlog.jsp?id='+row.id,'icon-writeblog');
 	}
@@ -68,13 +69,13 @@
 </script>
 </head>
 <body style="margin: 1px">
-<table id="dg" title="博客管理" class="easyui-datagrid" fitColumns="true" pagination="true" rownumbers="true" url="${ctx}/admin/blog/list.do" fit="true" toolbar="#tb">
+<table id="dg" title="博客管理" class="easyui-datagrid" fitColumns="true" pagination="true" rownumbers="true" url="${ctx}/admin/blogList.action" fit="true" toolbar="#tb">
    <thead>
    	<tr>
    		<th field="cb" checkbox="true" align="center"></th>
    		<th field="id" width="20" align="center">编号</th>
    		<th field="title" width="200" align="center" formatter="formatTitle">标题</th>
-   		<th field="releaseDate" width="50" align="center">发布日期</th>
+   		<th field="release_date" width="50" align="center">发布日期</th>
    		<th field="blogType" width="50" align="center" formatter="formatBlogType">博客类别</th>
    	</tr>
    </thead>

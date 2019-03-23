@@ -32,7 +32,7 @@
 		}else if(content==null || content==''){
 			alert("请输入内容！");
 		}else{
-			$.post("${ctx}/admin/save.action",
+			$.post("${ctx}/admin/saveBlog.action",
 				{
 					'title':title,
 					'type_id':blogTypeId,

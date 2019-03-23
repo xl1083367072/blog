@@ -10,4 +10,6 @@ public interface BlogTypeService {
 
     BlogType findByBlogId(Integer id);
 
+    BlogType findById(Integer id);
+
 }
