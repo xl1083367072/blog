@@ -91,4 +91,9 @@ public class BlogServiceImpl implements BlogService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void modify(Blog blog) {
+        blogMapper.updateByPrimaryKeySelective(blog);
+    }
 }

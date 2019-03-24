@@ -34,15 +34,14 @@
 		}else if(content==null || content==''){
 			alert("请输入内容！");
 		}else{
-			$.post("${ctx}/admin/blog/save.do",
+			$.post("${ctx}/admin/modifyBlog.action",
 					{
 						'id':'${param.id}',
 						'title':title,
-						'typeId':blogTypeId,
+						'type_id':blogTypeId,
 						'content':content,
-						'contentNoTag':UE.getEditor('editor').getContentTxt(),
 						'summary':UE.getEditor('editor').getContentTxt().substr(0,155),
-						'keyWord':keyWord
+						'key_word':keyWord
 					},
 				function(result){
 					if(result.success){

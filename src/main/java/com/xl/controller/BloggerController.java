@@ -17,7 +17,7 @@ public class BloggerController {
 
     @RequestMapping("/aboutMe")
     public String aboutMe(Model model){
-        model.addAttribute("mainPage","foreview/info.jsp");
+        model.addAttribute("mainPage","/foreview/info.jsp");
         return "mainTemp";
     }
 

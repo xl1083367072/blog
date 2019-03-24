@@ -75,15 +75,9 @@ public class IndexController {
 
             //查找扩展名是jpg的图片：根据页面需要拿n张图片,这里拿了3张
             Elements jpgs=doc.select("img[src$=.jpg]");
-            if (jpgs!=null && jpgs.size()>0) {
-                for(int i=0;i<jpgs.size();i++){
-                    Element jpg=jpgs.get(i);
-                    imagesList.add(jpg.toString());
-                    if(i==2){
-                        break;
-                    }
-                }
-            }
+            Elements gifs = doc.select("img[src$=.gif]");
+            suffix(imagesList, jpgs);
+            suffix(imagesList, gifs);
             blog.setImagesList(imagesList);
         }
         modelMap.addAttribute("blogList", blogList);
@@ -126,6 +120,17 @@ public class IndexController {
         return "mainTemp";
     }
 
+    private void suffix(List<String> imagesList, Elements img) {
+        if (img!=null && img.size()>0) {
+            for(int i=0;i<img.size();i++){
+                Element jpg=img.get(i);
+                imagesList.add(jpg.toString());
+                if(i==1){
+                    break;
+                }
+            }
+        }
+    }
 
 
 }

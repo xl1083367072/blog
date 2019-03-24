@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -30,24 +31,25 @@ public class BlogTypeAdminController {
 
     @ResponseBody
     @RequestMapping("/addBlogType")
-    public String addBlogType(BlogType blogType){
+    public String addBlogType(BlogType blogType,HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         if(blogType!=null){
             blogTypeService.add(blogType);
             jsonObject.put("success",true);
         }
-
+        refresh(request);
         return jsonObject.toJSONString();
     }
 
     @ResponseBody
     @RequestMapping("/modifyBlogType")
-    public String modifyBlogType(BlogType blogType){
+    public String modifyBlogType(BlogType blogType,HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         if(blogType!=null){
             blogTypeService.modify(blogType);
             jsonObject.put("success",true);
         }
+        refresh(request);
         return jsonObject.toJSONString();
     }
 
@@ -58,7 +60,7 @@ public class BlogTypeAdminController {
      */
     @ResponseBody
     @RequestMapping("/removeBlogType")
-    public  String removeBlogType(String ids){
+    public  String removeBlogType(String ids,HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
 
         if(ids!=null&&ids.length()>0){
@@ -68,10 +70,16 @@ public class BlogTypeAdminController {
                 blogService.removeByTypeId(Integer.parseInt(id));
                 blogTypeService.remove(Integer.parseInt(id));
             }
+            refresh(request);
             jsonObject.put("success",true);
         }
 
         return jsonObject.toJSONString();
+    }
+
+    public void refresh(HttpServletRequest request){
+        List<BlogType> blogTypes = blogTypeService.countList();
+        request.getServletContext().setAttribute("blogTypeCountList",blogTypes);
     }
 
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +43,7 @@ public class BlogAdminController {
 
     @ResponseBody
     @RequestMapping("/saveBlog")
-    public String save(Blog blog){
+    public String save(Blog blog,HttpServletRequest request){
         blog.setRelease_date(new Date());
 //        返回添加的博客的id
         int count = blogService.save(blog);
@@ -63,6 +64,9 @@ public class BlogAdminController {
         }catch (Exception e){
             e.printStackTrace();
         }
+//        该类型博客数量加1
+
+        refresh(request);
         return jsonObject.toJSONString();
     }
 
@@ -122,7 +126,7 @@ public class BlogAdminController {
 
     @ResponseBody
     @RequestMapping("/removeBlog")
-    public String removeBlog(String ids) throws Exception {
+    public String removeBlog(String ids,HttpServletRequest request) throws Exception {
         JSONObject jsonObject = new JSONObject();
         if(ids!=null&&ids.length()>0){
             String[] split = ids.split(",");
@@ -134,7 +138,25 @@ public class BlogAdminController {
             solrServer.commit();
             jsonObject.put("success",true);
         }
+        refresh(request);
         return jsonObject.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping("/modifyBlog")
+    public String modifyBlog(Blog blog,HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+
+        if(blog!=null){
+            blogService.modify(blog);
+            jsonObject.put("success",true);
+        }
+        return  jsonObject.toJSONString();
+    }
+
+    public void refresh(HttpServletRequest request){
+        List<BlogType> blogTypes = blogTypeService.countList();
+        request.getServletContext().setAttribute("blogTypeCountList",blogTypes);
     }
 
 }

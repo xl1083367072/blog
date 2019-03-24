@@ -76,7 +76,7 @@ public class BlogController {
 
 
 //        让主页显示博客信息页面
-        model.addAttribute("mainPage",request.getContextPath()+"foreview/view.jsp");
+        model.addAttribute("mainPage","/foreview/view.jsp");
 
 //        标题栏显示的网页标题
         model.addAttribute("pageTitle",blog.getTitle());
@@ -146,9 +146,10 @@ public class BlogController {
         model.addAttribute("blogList",blogs);
 //        回显
         model.addAttribute("q", queryKey);
-        model.addAttribute("mainPage",request.getContextPath()+"foreview/result.jsp");
+        model.addAttribute("mainPage","/foreview/result.jsp");
         model.addAttribute("pageCode","");
         return  "mainTemp";
     }
+
 
 }

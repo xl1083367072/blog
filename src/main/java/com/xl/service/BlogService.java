@@ -28,4 +28,6 @@ public interface BlogService {
     void removeBlogById(Integer id);
 
     void removeByTypeId(Integer typeId);
+
+    void modify(Blog blog);
 }

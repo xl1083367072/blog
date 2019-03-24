@@ -17,7 +17,7 @@
 				  	<span class="summary">摘要: ${blog.summary }...</span>
 				  	<span class="img">
 				  		<c:forEach var="image" items="${blog.imagesList }">
-					  		<a href="${ctx}/blog/articles/${blog.id}.html" target="_blank">${image }</a>
+					  		<a href="${ctx}/blog/articles/${blog.id}.action" target="_blank">${image }</a>
 					  		&nbsp;&nbsp;
 				  		</c:forEach>
 				  	</span>
